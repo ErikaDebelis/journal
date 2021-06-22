@@ -2,17 +2,23 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import Journal from './journal';
+import Journal, { finalEntry } from './journal';
 // import Journal from './journal.js';
 
-$('form#output-count-total').submit(function(event) {
 let journalObject = Journal();
-let entryTitle = $("input#title").val();
-let entryBody = $("textarea#text-area").val();
+let journal = finalEntry(journalObject, 'some title', 'text')
+console.log('stuff here?', journal)
 
-let journal = finalEntry(journalObject, entryTitle, entryBody);
 
-console.log(journal);
+$('button').click(function() {
+  console.log('we clicked!')
+  let journalObject = Journal();
+  let entryTitle = $("input#title").val();
+  let entryBody = $("textarea#text-area").val();
 
-  event.preventDefault();
+  let journal = finalEntry(journalObject, entryTitle, entryBody);
+
+  console.log(journal, 'sanity check');
+
+  $("#output-count-total").text(journal.wordCount);
 });
